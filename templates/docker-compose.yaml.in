@@ -1,0 +1,9 @@
+version: "3"
+services:
+  development:
+    build: .
+    container_name: %s
+    volumes:
+    - .:/development
+    ports:
+    - "1234:1234"
