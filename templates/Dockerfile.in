@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:22.04
 
 RUN apt-get update && \
 	apt-get install \
@@ -44,7 +44,7 @@ RUN cd /development && \
 	rm -rf paho.mqtt.c
 
 RUN cd /development && \
-	git clone https://github.com/NakedSolidSnake/sat.git && \
+	git clone https://github.com/codenotallk/sat && \
 	mkdir -p sat/build && \
 	cd sat/build && \
 	cmake \
@@ -63,9 +63,17 @@ RUN cd /development && \
 	rm -rf /development/sat && \
 	ldconfig
 
-RUN useradd -ms /bin/bash %s && chown -R %s:%s /development
+	RUN cd /development && \
+	git clone https://github.com/codenotallk/sat_scaffolding && \
+	mkdir -p sat_scaffolding/build && \
+	cd sat_scaffolding/build && \
+	cmake .. && \
+	make install && \
+	rm -rf /development/sat_scaffolding
 
-USER %s
+RUN useradd -ms /bin/bash developer && chmod 0777 /development
+
+USER developer
 
 EXPOSE 1234
 

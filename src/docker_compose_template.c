@@ -9,7 +9,7 @@ static const char *content =
     "services:\n"
     "  development:\n"
     "    #build: .\n"
-    "    image: solidcris/development\n"
+    "    image: codenotalk/development\n"
     "    container_name: %s\n"
     "    volumes:\n"
     "    - .:/development\n"

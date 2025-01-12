@@ -37,7 +37,7 @@ static const char *content =
     "    ./configure --prefix=/usr/local && \\\n"
     "    make install && \\\n"
     "    cd .. && \\\n"
-    "    rm -rf sqlite-autoconf-3450100.tar.gz\n\n"
+    "    rm -rf sqlite-autoconf-3450100.tar.gz sqlite-autoconf-3450100\n\n"
     "RUN cd /development && \\\n"
     "    git clone https://github.com/eclipse/paho.mqtt.c.git && \\\n"
     "    cd paho.mqtt.c && \\\n"
@@ -45,7 +45,7 @@ static const char *content =
     "    cd .. && \\\n"
     "    rm -rf paho.mqtt.c\n\n"
     "RUN cd /development && \\\n"
-    "    git clone https://github.com/NakedSolidSnake/sat.git && \\\n"
+    "    git clone https://github.com/codenotallk/sat.git && \\\n"
     "    mkdir -p sat/build && \\\n"
     "    cd sat/build && \\\n"
     "    cmake \\\n"
@@ -63,24 +63,28 @@ static const char *content =
     "    make install && \\\n"
     "    rm -rf /development/sat && \\\n"
     "    ldconfig\n\n"
-    "RUN useradd -ms /bin/bash %s && chown -R %s:%s /development\n\n"
-    "USER %s\n\n"
+    "RUN cd /development && \\\n"
+    "    git clone https://github.com/codenotallk/sat_scaffolding.git && \\\n"
+    "    mkdir -p sat_scaffolding/build && \\\n"
+    "    cd sat_scaffolding/build && \\\n"
+    "    cmake .. && \\\n"
+    "    make install && \\\n"
+    "    rm -rf /development/sat_scaffolding\n\n"
+    "RUN useradd -ms /bin/bash developer && chmod 0777 /development\n\n"
+    "USER developer\n\n"
     "EXPOSE 1234\n\n"
     "ENTRYPOINT [ \"/bin/tail\", \"-f\", \"/dev/null\" ]"
 };
 
 
-bool sat_scaffolding_create_dockerfile_template (const char *user)
+bool sat_scaffolding_create_dockerfile_template (void)
 {
     bool status = false;
 
     FILE *file = fopen (DOCKERFILE_FILENAME, "w");
     if (file != NULL)
     {
-        fprintf (file, content, user,
-                                user,
-                                user,
-                                user);
+        fputs (content, file);
 
         fclose (file);
         status = true;

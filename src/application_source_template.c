@@ -12,7 +12,7 @@ static const char *content =
     "    sat_status_t status = sat_status_set (&status, false, \"%s init error\");\n\n"
     "    if (object != NULL)\n"
     "    {\n\n"
-    "        memset (object, 0, sizeof (%s_t))\n\n"
+    "        memset (object, 0, sizeof (%s_t));\n\n"
     "        sat_status_set (&status, true, \"\");\n"
     "    }\n\n"
     "    return status;\n"

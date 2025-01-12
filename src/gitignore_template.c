@@ -16,7 +16,7 @@ bool sat_scaffolding_create_gitignore_template (void)
     FILE *file = fopen (GITIGNORE_FILENAME, "w");
     if (file != NULL)
     {
-        fprintf (file, content);
+        fputs (content, file);
         fclose (file);
         status = true;
     }

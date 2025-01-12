@@ -10,8 +10,7 @@
 
 #define SAT_SCAFFOLDING_PROJECT_NAME_INDEX      1
 #define SAT_SCAFFOLDING_BINARY_NAME_INDEX       2
-#define SAT_SCAFFOLDING_USER_INDEX              3
-#define SAT_SCAFFOLDING_PATH_INDEX              4
+#define SAT_SCAFFOLDING_PATH_INDEX              3
 
 
 static bool sat_scaffolding_create_directories (const char *path, const char *project_name);
@@ -21,15 +20,14 @@ int main (int argc, char *argv [])
 {
     bool status = false;
 
-    if (argc != 5)
+    if (argc != 4)
     {
-        fprintf (stderr, "Cannot create project.\nUsage.: %s <project name> <binary name> <user> <path>\n", argv [0]);
+        fprintf (stderr, "Cannot create project.\nUsage.: %s <project name> <binary name> <path>\n", argv [0]);
         return EXIT_FAILURE;
     }
 
     char *project_name = argv [SAT_SCAFFOLDING_PROJECT_NAME_INDEX];
     char *binary_name  = argv [SAT_SCAFFOLDING_BINARY_NAME_INDEX];
-    char *user         = argv [SAT_SCAFFOLDING_USER_INDEX];
     char *path         = argv [SAT_SCAFFOLDING_PATH_INDEX];
 
     do 
@@ -40,7 +38,7 @@ int main (int argc, char *argv [])
         if (sat_scaffolding_create_cmake_template (project_name, binary_name) == false)
             break;
 
-        if (sat_scaffolding_create_dockerfile_template (user) == false)
+        if (sat_scaffolding_create_dockerfile_template () == false)
             break;
 
         if (sat_scaffolding_create_gitignore_template () == false)
